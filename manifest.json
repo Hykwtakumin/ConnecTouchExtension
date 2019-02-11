@@ -1,0 +1,10 @@
+{
+  "manifest_version": 2,
+  "name": "ConnecTouchExtension",
+  "description": "extension that notify ConnecTouch Events",
+  "version": "0.1.0",
+  "permissions": ["notifications"],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

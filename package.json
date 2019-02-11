@@ -1,0 +1,28 @@
+{
+  "name": "ConnecTouchExtension",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "web-ext run --source-dir ./dist",
+    "android": "web-ext run --source-dir ./dist --target=firefox-android --android-device=2eda80a4 --firefox-apk=org.mozilla.fennec_aurora",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "hykwtakumin <hykwtakumin@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "fsbx": "^2.1.0-beta.4",
+    "fuse-box": "^3.7.0",
+    "fuse-box-typechecker": "^2.11.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.3",
+    "uglify-es": "^3.3.9",
+    "uglify-js": "^3.4.9",
+    "web-ext": "^2.9.3",
+    "web-ext-types": "^3.1.0"
+  }
+}

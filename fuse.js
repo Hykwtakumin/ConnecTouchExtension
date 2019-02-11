@@ -22,18 +22,43 @@ const fuse = FuseBox.init({
     plugins
 });
 
+const fuseBackGround = FuseBox.init({
+    homeDir: "./src",
+    sourceMaps: true,
+    target: "browser@es6",
+    output: "./dist/$name.js",
+    plugins
+});
+
+
+const fuseContent = FuseBox.init({
+    homeDir: "./src",
+    sourceMaps: true,
+    target: "browser@es6",
+    output: "./dist/$name.js",
+    plugins
+});
+
+const fuseOption = FuseBox.init({
+    homeDir: "./src",
+    sourceMaps: true,
+    target: "browser@es6",
+    output: "./dist/$name.js",
+    plugins
+});
+
 /*background script用bundle*/
-const background = fuse
+const background = fuseBackGround
     .bundle("background")
-    .instructions(`> src/background.ts`);
+    .instructions(`> ./src/background.ts`);
 /*content script用bundle*/
-const content = fuse
+const content = fuseContent
     .bundle("content")
-    .instructions(`> src/content.ts`);
+    .instructions(`> ./src/content.ts`);
 /*option page用bundle*/
-const option = fuse
+const option = fuseOption
     .bundle("option")
-    .instructions(`> src/option.ts`);
+    .instructions(`> ./src/option.ts`);
 
 
 if (process.env.NODE_ENV !== "production") {
@@ -65,7 +90,10 @@ Sparky.task("copy:html", () => {
     return Sparky.src("./**.html").dest("dist/");
 });
 
-Sparky.task("dev", ["copy:json", "copy:img", "copy:html"], () => {
-    fuse.run();
+Sparky.task("copy", ["copy:json", "copy:img", "copy:html"], () => {
+    console.log("static file copied!");
+    // fuseBackGround.run();
+    // fuseContent.run();
+    // fuseOption.run();
 });
 

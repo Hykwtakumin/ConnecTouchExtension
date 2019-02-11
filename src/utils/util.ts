@@ -1,5 +1,5 @@
 import axios,  {AxiosResponse} from "axios";
-
+import {ConnecTouchLink} from "./type";
 
 /*利用者のkeywordsと店のkeywordsとの間で共通するものを返す関数*/
 export const isKeyWordContained = async (userWords: Array<string>, shopWords: Array<string>): Promise<boolean> => {
@@ -22,8 +22,8 @@ export const client = axios.create({
         // Accept: "application/text/plain",
         // "Content-Type": "application/text/plain",
         "Access-Control-Allow-Origin": "*",
-        // "Access-Control-Allow-Headers":"Content-Type",
-        // "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
+        "Access-Control-Allow-Headers":"Content-Type",
+        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
     }
 });
 

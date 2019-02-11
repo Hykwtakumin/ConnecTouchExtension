@@ -3,8 +3,15 @@
   "name": "ConnecTouchExtension",
   "description": "extension that notify ConnecTouch Events",
   "version": "0.1.0",
-  "permissions": ["notifications"],
+  "permissions": [
+    "notifications",
+    "storage",
+    "http://connectouch.org/*",
+    "http://192.168.0.200/*",
+    "webRequest",
+    "background"
+  ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["/scripts/background.js"]
   }
 }

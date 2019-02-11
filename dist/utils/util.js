@@ -9,16 +9,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = require("axios");
-/*利用者のkeywordsと店のkeywordsとの間で共通するものを返す関数*/
-exports.isKeyWordContained = (userWords, shopWords) => __awaiter(this, void 0, void 0, function* () {
+/*２つの文字列配列の中に共通するものがあるかbooleanで返す関数*/
+exports.isKeyWordContained = (formerWords, latterWords) => __awaiter(this, void 0, void 0, function* () {
     return new Promise((resolve, reject) => {
-        userWords.forEach(word => {
-            if (shopWords && shopWords.includes(word)) {
+        formerWords.forEach(word => {
+            if (latterWords && latterWords.includes(word)) {
                 resolve(true);
             }
         });
     });
 });
+exports.notify = (message) => {
+    console.log("background script makes notification!");
+    const title = "ConnecTouchからのお知らせ";
+    browser.notifications.create({
+        "type": "basic",
+        "iconUrl": browser.extension.getURL("icons/icon.png"),
+        "title": title,
+        "message": message
+    });
+};
 exports.client = axios_1.default.create({
     timeout: 5000,
     withCredentials: false,
@@ -83,4 +93,28 @@ function delete_req(url, Params) {
     });
 }
 exports.delete_req = delete_req;
+exports.getStorage = (key) => {
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            const localData = yield browser.storage.local.get(key);
+            resolve(Object.values(localData));
+        }
+        catch (e) {
+            reject(e);
+        }
+    }));
+};
+/*基本的に文字列の保存を想定*/
+exports.setStorage = (key, value) => {
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield browser.storage.local.set({ key: value });
+            const setData = yield exports.getStorage(key);
+            resolve(setData);
+        }
+        catch (e) {
+            reject(e);
+        }
+    }));
+};
 //# sourceMappingURL=util.js.map

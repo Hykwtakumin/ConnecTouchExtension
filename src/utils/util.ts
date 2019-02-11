@@ -1,14 +1,27 @@
 import axios,  {AxiosResponse} from "axios";
 import {ConnecTouchLink} from "./type";
+import StorageObject = browser.storage.StorageObject;
+import StorageValue = browser.storage.StorageValue;
 
-/*利用者のkeywordsと店のkeywordsとの間で共通するものを返す関数*/
-export const isKeyWordContained = async (userWords: Array<string>, shopWords: Array<string>): Promise<boolean> => {
+/*２つの文字列配列の中に共通するものがあるかbooleanで返す関数*/
+export const isKeyWordContained = async (formerWords: Array<string>, latterWords: Array<string>): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-        userWords.forEach(word => {
-            if (shopWords && shopWords.includes(word)) {
+        formerWords.forEach(word => {
+            if (latterWords && latterWords.includes(word)) {
                 resolve(true);
             }
         });
+    });
+};
+
+export const notify = (message: string) => {
+    console.log("background script makes notification!");
+    const title = "ConnecTouchからのお知らせ";
+    browser.notifications.create({
+        "type": "basic",
+        "iconUrl": browser.extension.getURL("icons/icon.png"),
+        "title": title,
+        "message": message
     });
 };
 
@@ -76,3 +89,27 @@ export function delete_req(url: string, Params: any): Promise<AxiosResponse> {
             });
     });
 }
+
+export const getStorage = (key: string): Promise<StorageValue> => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const localData = await browser.storage.local.get(key) as StorageObject;
+            resolve(Object.values(localData));
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+/*基本的に文字列の保存を想定*/
+export const setStorage = (key: string, value: string): Promise<StorageValue> => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            await browser.storage.local.set({key: value});
+            const setData = await getStorage(key);
+            resolve(setData);
+        } catch (e) {
+            reject(e);
+        }
+    });
+};

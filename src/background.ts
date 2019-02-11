@@ -1,7 +1,6 @@
-
 /*アクセスするサーバー*/
 import {CardInfo, ConnecTouchLink, OsusumeJson} from "./utils/type";
-import {get} from "./utils/util";
+import {get, notify} from "./utils/util";
 
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
 const endpoint = "http://connectouch.org";
@@ -86,18 +85,6 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
         })
     }
 
-};
-
-
-const notify = (message: string) => {
-    console.log("background script makes notification!");
-    const title = "ConnecTouchからのお知らせ";
-    browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/icon.png"),
-        "title": title,
-        "message": message
-    });
 };
 
 setInterval(() => {

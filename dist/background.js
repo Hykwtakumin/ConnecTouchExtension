@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("./utils/util");
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
-const endpoint = "http://connectouc.org";
+const endpoint = "http://connectouch.org";
 /*以下のカードに関するイベントを対象とする*/
 //const observeCardID = browser.storage.local.get("cardID") || "010104128215612b";
 const observeCardID = "010104128215612b";
@@ -124,9 +124,11 @@ exports.client = axios_1.default.create({
     withCredentials: false,
     validateStatus: _ => true,
     headers: {
-        // Accept: "application/text/plain",
-        // "Content-Type": "application/text/plain",
+        Accept: "application/text/plain",
+        "Content-Type": "application/text/plain",
         "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
     }
 });
 function get(url, Params) {

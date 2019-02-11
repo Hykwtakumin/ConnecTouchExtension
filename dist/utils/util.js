@@ -20,8 +20,6 @@ exports.isKeyWordContained = (userWords, shopWords) => __awaiter(this, void 0, v
     });
 });
 exports.client = axios_1.default.create({
-    //baseURL: "http://192.168.0.200/",
-    // baseURL: "http://connectouch.org/",
     timeout: 5000,
     withCredentials: false,
     validateStatus: _ => true,

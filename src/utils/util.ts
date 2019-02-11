@@ -13,8 +13,6 @@ export const isKeyWordContained = async (userWords: Array<string>, shopWords: Ar
 };
 
 export const client = axios.create({
-    //baseURL: "http://192.168.0.200/",
-    // baseURL: "http://connectouch.org/",
     timeout: 5000,
     withCredentials: false,
     validateStatus: _ => true,

@@ -72,6 +72,7 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
                 notify(`新しいタッチイベントが発生しました!`);
             }
             /*リーダーIDが自分のIDと一致する場合*/
+            /*カードIDが自分のIDと一致する場合*/
             // if (link.link[0] === observeReaderId) {
             //     console.log(`${link.link[1]}が私にタッチした!`);
             //     const filteredList = await this.filterList(link.link[1]);
@@ -90,8 +91,7 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
 
 const notify = (message: string) => {
     console.log("background script makes notification!");
-    const title = "notificationTitle";
-    const content = "Add-on Installed!";
+    const title = "ConnecTouchからのお知らせ";
     browser.notifications.create({
         "type": "basic",
         "iconUrl": browser.extension.getURL("icons/icon.png"),

@@ -66,6 +66,7 @@ exports.getDiff = (oldLinks, newLinks) => {
                 notify(`新しいタッチイベントが発生しました!`);
             }
             /*リーダーIDが自分のIDと一致する場合*/
+            /*カードIDが自分のIDと一致する場合*/
             // if (link.link[0] === observeReaderId) {
             //     console.log(`${link.link[1]}が私にタッチした!`);
             //     const filteredList = await this.filterList(link.link[1]);
@@ -81,8 +82,7 @@ exports.getDiff = (oldLinks, newLinks) => {
 };
 const notify = (message) => {
     console.log("background script makes notification!");
-    const title = "notificationTitle";
-    const content = "Add-on Installed!";
+    const title = "ConnecTouchからのお知らせ";
     browser.notifications.create({
         "type": "basic",
         "iconUrl": browser.extension.getURL("icons/icon.png"),
@@ -118,8 +118,6 @@ exports.isKeyWordContained = (userWords, shopWords) => __awaiter(this, void 0, v
     });
 });
 exports.client = axios_1.default.create({
-    //baseURL: "http://192.168.0.200/",
-    // baseURL: "http://connectouch.org/",
     timeout: 5000,
     withCredentials: false,
     validateStatus: _ => true,

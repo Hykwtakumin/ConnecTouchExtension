@@ -6,8 +6,8 @@
   "permissions": [
     "notifications",
     "storage",
-    "http://connectouch.org/*",
-    "http://192.168.0.200/*",
+    "*://connectouch.org/*",
+    "*://192.168.0.200/*",
     "webRequest",
     "background"
   ],

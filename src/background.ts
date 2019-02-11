@@ -3,11 +3,11 @@ import {CardInfo, ConnecTouchLink, OsusumeJson} from "./utils/type";
 import {get, notify} from "./utils/util";
 
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
-const endpoint = "http://connectouch.org";
+let endpoint = "http://connectouch.org";
 
 /*以下のカードに関するイベントを対象とする*/
 //const observeCardID = browser.storage.local.get("cardID") || "010104128215612b";
-const observeCardID = "010104128215612b";
+let observeCardID = "010104128215612b";
 
 /*JSONを保存して格納する*/
 const osusumeList: Array<OsusumeJson> = [];

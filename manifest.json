@@ -3,6 +3,9 @@
   "name": "ConnecTouchExtension",
   "description": "extension that notify ConnecTouch Events",
   "version": "0.1.0",
+  "icons": {
+    "48": "/icons/icon.png"
+  },
   "permissions": [
     "notifications",
     "storage",
@@ -15,5 +18,10 @@
   },
   "options_ui": {
     "page": "option.html"
+  },
+  "applications": {
+    "gecko": {
+      "strict_min_version": "55.0a2"
+    }
   }
 }

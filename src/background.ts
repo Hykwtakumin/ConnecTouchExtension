@@ -1,7 +1,7 @@
 
 /*アクセスするサーバー*/
-import {CardInfo, ConnecTouchLink, OsusumeJson} from "../utils/type";
-import {get} from "../utils/util";
+import {CardInfo, ConnecTouchLink, OsusumeJson} from "./utils/type";
+import {get} from "./utils/util";
 
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
 const endpoint = "http://connectouc.org";

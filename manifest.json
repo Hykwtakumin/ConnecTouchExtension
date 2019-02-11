@@ -8,10 +8,9 @@
     "storage",
     "*://connectouch.org/*",
     "*://192.168.0.200/*",
-    "webRequest",
-    "background"
+    "webRequest"
   ],
   "background": {
-    "scripts": ["/scripts/background.js"]
+    "scripts": ["background.js"]
   }
 }

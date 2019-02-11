@@ -29,8 +29,6 @@ exports.client = axios_1.default.create({
         // Accept: "application/text/plain",
         // "Content-Type": "application/text/plain",
         "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
     }
 });
 function get(url, Params) {

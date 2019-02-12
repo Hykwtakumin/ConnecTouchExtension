@@ -8,11 +8,15 @@
 <body>
     <h1>設定画面</h1>
     <div id="container">
-        <label>リクエスト先URL : <input id="endpointURL" type="text" /></label>
-            <p>現在の値 : <span id="currentURL"></span></p>
-        <label>自分のカード番号 : <input id="targetCardNumber" type="text" /></label>
-            <p>現在の値 : <span id="currentNumber"></span></p>
-        <input id="applyButton" type="button" value="設定する"/>
+        <label>リクエスト先URL :
+            <select id="endpointURL">
+                <option value="http://connectouch.org">http://connectouch.org</option>
+                <option value="http://192.168.0.200">http://192.168.0.200</option>
+            </select>
+        </label>
+        <label>自分のカード番号 :
+            <input id="targetCardNumber" type="number" min="1" max="20" value="1">
+        </label>
     </div>
 </body>
 </html>

@@ -15,9 +15,11 @@
     "start": "web-ext run --source-dir ./dist",
     "build": "npm run clean && npm run copy && npm run tsc && npm run browserify-bg && npm run browserify-op",
     "pack": "npm run build && zip -r extension.zip ./dist",
+    "pack:webex": "web-ext build --source-dir ./dist",
     "lint": "npm run build && addons-linter ./dist",
     "lint:packed": "npm run pack && addons-linter extension.zip",
     "android": "web-ext run --source-dir ./dist --target=firefox-android --android-device=2eda80a4 --firefox-apk=org.mozilla.fennec_aurora",
+    "android:oppo": "web-ext run --source-dir ./dist --target=firefox-android --android-device=b707300a --firefox-apk=org.mozilla.fennec_aurora",
     "dev": "npm run build && npm run android",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

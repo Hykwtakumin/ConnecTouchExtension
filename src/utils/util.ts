@@ -15,7 +15,6 @@ export const isKeyWordContained = async (formerWords: Array<string>, latterWords
 };
 
 export const notify = (message: string) => {
-    console.log("background script makes notification!");
     const title = "ConnecTouchからのお知らせ";
     browser.notifications.create({
         "type": "basic",
@@ -95,19 +94,6 @@ export const getStorage = (key: string): Promise<StorageValue> => {
         try {
             const localData = await browser.storage.local.get(key) as StorageObject;
             resolve(Object.values(localData));
-        } catch (e) {
-            reject(e);
-        }
-    });
-};
-
-/*基本的に文字列の保存を想定*/
-export const setStorage = (key: string, value: string): Promise<StorageValue> => {
-    return new Promise( async (resolve, reject) => {
-        try {
-            await browser.storage.local.set({key: value});
-            const setData = await getStorage(key);
-            resolve(setData);
         } catch (e) {
             reject(e);
         }

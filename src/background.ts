@@ -4,10 +4,13 @@ import {get, notify} from "./utils/util";
 
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
 let endpoint = "http://connectouch.org";
+//let endpoint = "http://192.168.0.200";
 
 /*以下のカードに関するイベントを対象とする*/
 //const observeCardID = browser.storage.local.get("cardID") || "010104128215612b";
 let observeCardID = "010104128215612b";
+
+let cardNumber = 1;
 
 /*JSONを保存して格納する*/
 const osusumeList: Array<OsusumeJson> = [];
@@ -86,6 +89,20 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
     }
 
 };
+
+browser.storage.onChanged.addListener(changes => {
+    console.dir(changes);
+    for (let key in changes) {
+        console.dir(changes);
+        if (key === "endpointURL") {
+            endpoint = changes[key].newValue;
+            console.log(`endpoint : ${endpoint}`);
+        } else if (key === "targetCardNumber") {
+            cardNumber = changes[key].newValue;
+            console.log(`cardNumber : ${cardNumber}`);
+        }
+    }
+});
 
 setInterval(() => {
     pollingLinks();

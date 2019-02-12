@@ -10,96 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const util_1 = require("./utils/util");
-//const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
-let endpoint = "http://connectouch.org";
-//let endpoint = "http://192.168.0.200";
-/*以下のカードに関するイベントを対象とする*/
-//const observeCardID = browser.storage.local.get("cardID") || "010104128215612b";
-let observeCardID = "010104128215612b";
-let cardNumber = 1;
-/*JSONを保存して格納する*/
-const osusumeList = [];
-/*取得したlinksをローカルの配列として保持する*/
-const storedLinks = [];
-/*参加者情報のテーブルを取ってくる*/
-const userInfoTable = [];
-/*参加者のプロフィールを取ってくる関数*/
-const getUserInfo = () => __awaiter(this, void 0, void 0, function* () {
-    const endPointUrl = `${endpoint}/info`;
-    const response = yield util_1.get(endPointUrl, {});
-    const infoLinks = response.data;
-    infoLinks.forEach(item => {
-        userInfoTable.push(item);
-    });
+window.onload = () => __awaiter(this, void 0, void 0, function* () {
+    /*設定フォーム*/
+    const endpointURL = document.getElementById("endpointURL");
+    const targetCardNumber = document.getElementById("targetCardNumber");
+    endpointURL.addEventListener("change", () => __awaiter(this, void 0, void 0, function* () {
+        yield browser.storage.local.set({ "endpointURL": endpointURL.value });
+        util_1.notify("設定を保存しました!");
+    }));
+    targetCardNumber.addEventListener("change", () => __awaiter(this, void 0, void 0, function* () {
+        yield browser.storage.local.set({ "targetCardNumber": targetCardNumber.value });
+        util_1.notify("設定を保存しました!");
+    }));
 });
-/*ポーリングする関数*/
-const pollingLinks = () => __awaiter(this, void 0, void 0, function* () {
-    /*Paramsにidを追加しない場合全てのリーダーのイベントを取得できる*/
-    const endPointUrl = `${endpoint}/links?limit=100`;
-    const request = yield util_1.get(endPointUrl, {});
-    const loadedLinks = request.data;
-    /*新しく追加されたLinksを求める*/
-    this.getDiff(storedLinks, loadedLinks);
-    /*ローカルの配列を新しい配列に上書きする*/
-    storedLinks.length = 0;
-    Object.assign(storedLinks, loadedLinks);
-});
-/*新旧の配列の差分を取得する関数*/
-exports.getDiff = (oldLinks, newLinks) => {
-    /*newLinksにあってoldLinksに無いものは新しいものとする*/
-    /*あるかないかの確認はmongoDBのレコードIdを元に行う*/
-    const oldIdArray = oldLinks.map(link => link._id.$oid);
-    /*レコードIdを元に存在しているかを真偽値で返す関数*/
-    const isContained = (link) => {
-        return oldIdArray.includes(link._id.$oid);
-    };
-    /*newLinksにあってoldLinksに無いものだけを集めた配列を作る*/
-    const diffLinks = newLinks.reduce((prev, curr) => {
-        if (!isContained(curr)) {
-            prev.push(curr);
-        }
-        return prev;
-    }, []);
-    if (diffLinks.length != 0 && diffLinks.length < 2) {
-        util_1.notify(`新しいタッチイベントが${diffLinks.length}件発生しました!`);
-        /*例えば自分が1番の場合は監視するフィルタも作れる*/
-        diffLinks.forEach((link) => __awaiter(this, void 0, void 0, function* () {
-            if (link.cardId === observeCardID) {
-                util_1.notify(`新しいタッチイベントが発生しました!`);
-            }
-            /*リーダーIDが自分のIDと一致する場合*/
-            /*カードIDが自分のIDと一致する場合*/
-            // if (link.link[0] === observeReaderId) {
-            //     console.log(`${link.link[1]}が私にタッチした!`);
-            //     const filteredList = await this.filterList(link.link[1]);
-            //     console.dir(filteredList);
-            //     if (filteredList.length === 0) {
-            //         /*推薦するものが無ければ特に何もしない*/
-            //     } else {
-            //         this.notificate("新しいタッチイベントを検出しました!");
-            //     }
-            // }
-        }));
-    }
-};
-browser.storage.onChanged.addListener(changes => {
-    console.dir(changes);
-    for (let key in changes) {
-        console.dir(changes);
-        if (key === "endpointURL") {
-            endpoint = changes[key].newValue;
-            console.log(`endpoint : ${endpoint}`);
-        }
-        else if (key === "targetCardNumber") {
-            cardNumber = changes[key].newValue;
-            console.log(`cardNumber : ${cardNumber}`);
-        }
-    }
-});
-setInterval(() => {
-    pollingLinks();
-}, 1000);
-//browser.runtime.onInstalled.addListener(notify);
 
 },{"./utils/util":2}],2:[function(require,module,exports){
 "use strict";

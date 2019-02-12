@@ -1,0 +1,68 @@
+Manifest-Version: 1.0
+
+Name: background.js
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: ryOdTac4ZVhz567llCi0pQ==
+SHA1-Digest: /AjDUBRfWxqsNvtknnyN+vgFpaY=
+SHA256-Digest: ZL97h5Tvu2qQ6NylaESAGEg7/B3se/hJSac6//u2S4I=
+
+Name: background.js.map
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: w7zNDAK8vjDmUTVPmmVzJg==
+SHA1-Digest: 7c0X5YyQYW1dM7wzObWUq91I0T4=
+SHA256-Digest: or6M6NuOpbjEeVua4TAGg9IPuLADGWTgnVAj7aeV4YY=
+
+Name: manifest.json
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: cTIJ9K5sJ2QjJtt5Jd6byw==
+SHA1-Digest: WeOEprF5mZFvXPvYKeXq0MIxntM=
+SHA256-Digest: F833amZ0/H5OKkRBF7ZIruodhIhQjlsbdXjMDvy1nak=
+
+Name: option.html
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: TEBSqvZzZfwcTzAeCH8l8g==
+SHA1-Digest: pTHb++DSIkLWzZzIZkQU+5dpCO8=
+SHA256-Digest: 22uGCFlwf7tmGeLRCcvY1Cl8vTg61KxIVWSGKSHy/lA=
+
+Name: option.js
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: lafr/wDUZ7fwhsv8tA3PFg==
+SHA1-Digest: gMZdRBd+4TyqXSph+neXaUnazmc=
+SHA256-Digest: czXsY9u+ILBS6KkOqTjBV51LIbyfwO+u/ErBfFH9fs0=
+
+Name: option.js.map
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: y84w4+a4b46xaYZtkhYNng==
+SHA1-Digest: JmZ6Tqq2XcNXd/b+wM61NMgaQmI=
+SHA256-Digest: P09x2wyEQKd9PpiBoxYZhSU5Af28rPzXR0ayIK6lbWY=
+
+Name: icons/icon.png
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: a2hJRMySISEVvXglic9Rqg==
+SHA1-Digest: a3QfRpY3q47t45mRMK+u7aZM3G4=
+SHA256-Digest: O9woqmFgCImFGWcHJ1VUdj1dommme/6sR97rTdUta7A=
+
+Name: utils/type.js
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: 00Af7vsx4QjepsWbAJD54A==
+SHA1-Digest: aT4wZWDNyaRoxu3WhIvQR2fQWsk=
+SHA256-Digest: 2m433y2qY9Q8jWzXq+y0DOtWLtc5f/BUaQtJYPfAHhw=
+
+Name: utils/type.js.map
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: MhzIJupU3M9P78Yz/06aiQ==
+SHA1-Digest: i2Y71ozPayViGxdG2piZciWBHLE=
+SHA256-Digest: 1JhF0PUs0KKaecBy4Pb7jzPUReWdcw+eSBG+GLjCoWs=
+
+Name: utils/util.js
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: JvIkeeuZzr80NKZVuAEoww==
+SHA1-Digest: Jba1RGvM5aMfIrD7iesYSKI8Py0=
+SHA256-Digest: 2YLuarzZ/zLiYxgDirbwtDpXV/twgHdiwgvQylXswLY=
+
+Name: utils/util.js.map
+Digest-Algorithms: MD5 SHA1 SHA256
+MD5-Digest: cTLqePcArZsi+KXbpb7qVg==
+SHA1-Digest: UBV83JNM11zxBFYWAVVySt2T5WM=
+SHA256-Digest: ufsJRdtE7/oVPXPPksz5t+eLIt8dEO7kV11FZhMjgVE=
+

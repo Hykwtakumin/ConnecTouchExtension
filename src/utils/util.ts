@@ -1,26 +1,36 @@
 import axios,  {AxiosResponse} from "axios";
 import {ConnecTouchLink} from "./type";
+import StorageObject = browser.storage.StorageObject;
+import StorageValue = browser.storage.StorageValue;
 
-/*利用者のkeywordsと店のkeywordsとの間で共通するものを返す関数*/
-export const isKeyWordContained = async (userWords: Array<string>, shopWords: Array<string>): Promise<boolean> => {
+/*２つの文字列配列の中に共通するものがあるかbooleanで返す関数*/
+export const isKeyWordContained = async (formerWords: Array<string>, latterWords: Array<string>): Promise<boolean> => {
     return new Promise((resolve, reject) => {
-        userWords.forEach(word => {
-            if (shopWords && shopWords.includes(word)) {
+        formerWords.forEach(word => {
+            if (latterWords && latterWords.includes(word)) {
                 resolve(true);
             }
         });
     });
 };
 
+export const notify = (message: string) => {
+    const title = "ConnecTouchからのお知らせ";
+    browser.notifications.create({
+        "type": "basic",
+        "iconUrl": browser.extension.getURL("icons/icon.png"),
+        "title": title,
+        "message": message
+    });
+};
+
 export const client = axios.create({
-    //baseURL: "http://192.168.0.200/",
-    // baseURL: "http://connectouch.org/",
     timeout: 5000,
     withCredentials: false,
     validateStatus: _ => true,
     headers: {
-        // Accept: "application/text/plain",
-        // "Content-Type": "application/text/plain",
+        Accept: "application/text/plain",
+        "Content-Type": "application/text/plain",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers":"Content-Type",
         "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -78,3 +88,14 @@ export function delete_req(url: string, Params: any): Promise<AxiosResponse> {
             });
     });
 }
+
+export const getStorage = (key: string): Promise<StorageValue> => {
+    return new Promise( async (resolve, reject) => {
+        try {
+            const localData = await browser.storage.local.get(key) as StorageObject;
+            resolve(Object.values(localData));
+        } catch (e) {
+            reject(e);
+        }
+    });
+};

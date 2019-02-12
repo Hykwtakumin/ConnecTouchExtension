@@ -1,14 +1,16 @@
-
 /*アクセスするサーバー*/
-import {CardInfo, ConnecTouchLink, OsusumeJson} from "../utils/type";
-import {get} from "../utils/util";
+import {CardInfo, ConnecTouchLink, OsusumeJson} from "./utils/type";
+import {get, notify} from "./utils/util";
 
 //const endpoint = browser.storage.local.get("endpoint") || "http://connectouc.org";
-const endpoint = "http://connectouc.org";
+let endpoint = "http://connectouch.org";
+//let endpoint = "http://192.168.0.200";
 
 /*以下のカードに関するイベントを対象とする*/
 //const observeCardID = browser.storage.local.get("cardID") || "010104128215612b";
-const observeCardID = "010104128215612b";
+let observeCardID = "010104128215612b";
+
+let cardNumber = 1;
 
 /*JSONを保存して格納する*/
 const osusumeList: Array<OsusumeJson> = [];
@@ -72,6 +74,7 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
                 notify(`新しいタッチイベントが発生しました!`);
             }
             /*リーダーIDが自分のIDと一致する場合*/
+            /*カードIDが自分のIDと一致する場合*/
             // if (link.link[0] === observeReaderId) {
             //     console.log(`${link.link[1]}が私にタッチした!`);
             //     const filteredList = await this.filterList(link.link[1]);
@@ -87,18 +90,19 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
 
 };
 
-
-const notify = (message: string) => {
-    console.log("background script makes notification!");
-    const title = "notificationTitle";
-    const content = "Add-on Installed!";
-    browser.notifications.create({
-        "type": "basic",
-        "iconUrl": browser.extension.getURL("icons/icon.png"),
-        "title": title,
-        "message": message
-    });
-};
+browser.storage.onChanged.addListener(changes => {
+    console.dir(changes);
+    for (let key in changes) {
+        console.dir(changes);
+        if (key === "endpointURL") {
+            endpoint = changes[key].newValue;
+            console.log(`endpoint : ${endpoint}`);
+        } else if (key === "targetCardNumber") {
+            cardNumber = changes[key].newValue;
+            console.log(`cardNumber : ${cardNumber}`);
+        }
+    }
+});
 
 setInterval(() => {
     pollingLinks();

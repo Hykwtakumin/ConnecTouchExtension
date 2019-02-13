@@ -7,11 +7,11 @@ window.onload = async () => {
 
     endpointURL.addEventListener("change", async () => {
         await browser.storage.local.set({"endpointURL": endpointURL.value});
-        notify("設定を保存しました!");
+        notify(`設定を保存しました! リクエスト先URL:${endpointURL.value}`);
     });
 
     targetCardNumber.addEventListener("change", async () => {
         await browser.storage.local.set({"targetCardNumber": targetCardNumber.value});
-        notify("設定を保存しました!");
+        notify(`設定を保存しました! 自分のカード番号:${targetCardNumber.value}`);
     });
 };

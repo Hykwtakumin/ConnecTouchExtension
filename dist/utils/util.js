@@ -103,4 +103,42 @@ exports.getStorage = (key) => {
         }
     }));
 };
+/*カード番号からcardIDを解決する関数*/
+exports.resolveCardIdByNumber = (cardNumber) => __awaiter(this, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        /*userCardTable.jsonを取得する*/
+        const request = yield get("http://192.168.0.200:3000/userCardTable.json", {});
+        const cardTable = yield request.data;
+        console.dir(cardTable);
+        const cardId = cardTable.find(card => {
+            return card.number == cardNumber;
+        });
+        resolve(cardId.id);
+    }));
+});
+/*参加者のプロフィールを取ってくる関数*/
+exports.getUserInfo = (cardId) => __awaiter(this, void 0, void 0, function* () {
+    const endPointUrl = `http://192.168.0.200/info`;
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        const response = yield get(endPointUrl, {});
+        const infoLinks = response.data;
+        const info = infoLinks.find(item => {
+            return item.id === cardId;
+        });
+        resolve(info);
+    }));
+});
+/*リーダーの情報を取ってくる関数*/
+exports.getReaderInfo = (readerId) => __awaiter(this, void 0, void 0, function* () {
+    //readerTable.json
+    const endPointUrl = `http://192.168.0.200/readerTable.json`;
+    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        const response = yield get(endPointUrl, {});
+        const readerInfos = response.data;
+        const reader = readerInfos.find(item => {
+            return item.id === readerId;
+        });
+        resolve(reader.desc);
+    }));
+});
 //# sourceMappingURL=util.js.map

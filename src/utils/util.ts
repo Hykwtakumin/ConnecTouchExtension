@@ -1,7 +1,8 @@
 import axios,  {AxiosResponse} from "axios";
-import {ConnecTouchLink} from "./type";
+import {CardInfo, ConnecTouchLink} from "./type";
 import StorageObject = browser.storage.StorageObject;
 import StorageValue = browser.storage.StorageValue;
+import {rejects} from "assert";
 
 /*２つの文字列配列の中に共通するものがあるかbooleanで返す関数*/
 export const isKeyWordContained = async (formerWords: Array<string>, latterWords: Array<string>): Promise<boolean> => {
@@ -97,5 +98,49 @@ export const getStorage = (key: string): Promise<StorageValue> => {
         } catch (e) {
             reject(e);
         }
+    });
+};
+
+/*カード番号からcardIDを解決する関数*/
+export const resolveCardIdByNumber = async (cardNumber: number): Promise<string> => {
+    return new Promise( async (resolve, reject) => {
+        /*userCardTable.jsonを取得する*/
+        const request = await get("http://192.168.0.200:3000/userCardTable.json", {});
+        const cardTable = await request.data;
+        console.dir(cardTable);
+        const cardId = cardTable.find(card => {
+            return card.number == cardNumber
+        });
+        resolve(cardId.id);
+    });
+};
+
+/*参加者のプロフィールを取ってくる関数*/
+export const getUserInfo = async (cardId : string):Promise<CardInfo> => {
+    const endPointUrl = `http://192.168.0.200/info`;
+
+    return new Promise( async (resolve, reject) => {
+        const response = await get(endPointUrl, {});
+        const infoLinks = response.data as Array<CardInfo>;
+
+        const info =  infoLinks.find(item => {
+            return item.id === cardId
+        });
+        resolve(info);
+    });
+};
+
+/*リーダーの情報を取ってくる関数*/
+export const getReaderInfo = async (readerId: string): Promise<string> => {
+    //readerTable.json
+    const endPointUrl = `http://192.168.0.200/readerTable.json`;
+    return new Promise( async (resolve, reject) => {
+        const response = await get(endPointUrl, {});
+        const readerInfos = response.data;
+
+        const reader = readerInfos.find(item => {
+            return item.id === readerId
+        });
+        resolve(reader.desc);
     });
 };

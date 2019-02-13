@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "ConnecTouchExtension",
   "description": "extension that notify ConnecTouch Events",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "icons": {
     "48": "/icons/icon.png"
   },
@@ -21,7 +21,8 @@
   },
   "applications": {
     "gecko": {
-      "id": "hykwtakumin@gmail.com",
+      "id": "hykwtakumin@gmail.com011",
+      "update_url":"https://raw.githubusercontent.com/Hykwtakumin/ConnecTouchExtension/master/updates.json",
       "strict_min_version": "66.0"
     }
   }

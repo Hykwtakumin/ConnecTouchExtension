@@ -57,53 +57,23 @@ exports.getDiff = (oldLinks, newLinks) => {
             console.dir(link);
             console.log(`link.id : ${link.link[1]}`);
             console.log(`observeCardID : ${observeCardID}`);
-            // if (link.link[0] === "signagePhoto") {
-            //     /*サイネージストーリーの時も分岐させる*/if (link.link[1] === observeCardID) {
-            //         /*自分で写真をとって自分のタイムラインに表示する*/
-            //         notify(`新しい写真を撮影しました!`);
-            //     } else {
-            //         /*secretが一致する人の写真も通知する
-            //         * */
-            //         const me = await getUserInfo(observeCardID);
-            //         const you = await getUserInfo(diffLinks[0].link[1]);
-            //         if (isKeyWordContained(me.secrets, you.secrets)) {
-            //             notify(`${you.email}新しい写真を撮影しました!`);
-            //         }
-            //     }
-            // } else if (link.link[1] === observeCardID) {
-            //     notify(`新しいタッチイベントが発生しました!`);
-            // } else {
-            //     const me = await getUserInfo(observeCardID);
-            //     const you = await getUserInfo(diffLinks[0].link[1]);
-            //     if (await isKeyWordContained(me.secrets, you.secrets)) {
-            //         notify(`新しいタッチイベントが発生しました!`);
-            //     }
-            // }
             if (link.link[0] === "signagePhoto") {
-                const cardID = link.link[1];
-                const taker = yield util_1.getUserInfo(cardID);
-                util_1.notify(`${taker.email}が新しい写真を撮影しました!`);
-                // if (link.link[1] === observeCardID) {
-                //     notify("新しい写真を撮影しました!");
-                // } else {
-                //     const cardID = link.link[1];
-                //     const taker = await getUserInfo(cardID);
-                //     notify(`${taker.email}が新しい写真を撮影しました!`);
-                // }
+                /*サイネージストーリーの時も分岐させる*/
+                if (link.link[1] !== observeCardID) {
+                    const me = yield util_1.getUserInfo(observeCardID);
+                    const you = yield util_1.getUserInfo(diffLinks[0].link[1]);
+                    if (util_1.isKeyWordContained(me.secrets, you.secrets)) {
+                        util_1.notify(`${you.email}が新しい写真を撮影しました!`);
+                    }
+                }
             }
             else {
-                const cardID = link.link[1];
+                const me = yield util_1.getUserInfo(observeCardID);
+                const you = yield util_1.getUserInfo(diffLinks[0].link[1]);
                 const readerName = yield util_1.getReaderInfo(link.link[0]);
-                const taker = yield util_1.getUserInfo(cardID);
-                util_1.notify(`${taker.email}が${readerName}にタッチしました。`);
-                // const readerName = getReaderInfo(link.link[0]);
-                // if (link.link[1] === observeCardID) {
-                //     notify(`${readerName}にタッチしました!`);
-                // } else {
-                //     const cardID = link.link[1];
-                //     const taker = await getUserInfo(cardID);
-                //     notify(`${taker.email}が${readerName}にタッチしました。`);
-                // }
+                if (yield util_1.isKeyWordContained(me.secrets, you.secrets)) {
+                    util_1.notify(`${you.email}が${readerName}にタッチしました!`);
+                }
             }
         }));
     }
@@ -119,15 +89,7 @@ browser.storage.onChanged.addListener((changes) => __awaiter(this, void 0, void 
         else if (key === "targetCardNumber") {
             cardNumber = changes[key].newValue;
             console.log(`cardNumber : ${cardNumber}`);
-            util_1.resolveCardIdByNumber(cardNumber)
-                .then(cardId => {
-                observeCardID = cardId;
-                console.log(`observeCardID : ${observeCardID}`);
-                window.localStorage.setItem("observeCardID", observeCardID);
-            })
-                .catch(error => {
-                console.error(error);
-            });
+            observeCardID = util_1.resolveCardIdByNumber(cardNumber);
         }
     }
 }));
@@ -172,8 +134,8 @@ exports.client = axios_1.default.create({
     withCredentials: false,
     validateStatus: _ => true,
     headers: {
-        Accept: "application/text/plain",
-        "Content-Type": "application/text/plain",
+        Accept: "application/json, application/text/plain",
+        "Content-Type": "application/text/plain, application/json, application/x-www-form-urlencoded",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Content-Type",
         "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -242,19 +204,6 @@ exports.getStorage = (key) => {
         }
     }));
 };
-/*カード番号からcardIDを解決する関数*/
-exports.resolveCardIdByNumber = (cardNumber) => __awaiter(this, void 0, void 0, function* () {
-    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        /*userCardTable.jsonを取得する*/
-        const request = yield get("http://192.168.0.200:3000/userCardTable.json", {});
-        const cardTable = yield request.data;
-        console.dir(cardTable);
-        const cardId = cardTable.find(card => {
-            return card.number == cardNumber;
-        });
-        resolve(cardId.id);
-    }));
-});
 /*参加者のプロフィールを取ってくる関数*/
 exports.getUserInfo = (cardId) => __awaiter(this, void 0, void 0, function* () {
     const endPointUrl = `http://192.168.0.200/info`;
@@ -280,6 +229,42 @@ exports.getReaderInfo = (readerId) => __awaiter(this, void 0, void 0, function* 
         resolve(reader.desc);
     }));
 });
+/*カード番号からcardIDを解決する関数*/
+exports.resolveCardIdByNumber = (cardNumber) => {
+    if (cardNumber == 11) {
+        return "01120112661ac512";
+    }
+    else if (cardNumber == 12) {
+        return "01120212661ad012";
+    }
+    else if (cardNumber == 13) {
+        return "01120212661af412";
+    }
+    else if (cardNumber == 14) {
+        return "01120112661aea12";
+    }
+    else if (cardNumber == 15) {
+        return "01120212661af512";
+    }
+    else if (cardNumber == 16) {
+        return "01120112661aeb12";
+    }
+    else if (cardNumber == 17) {
+        return "01120212661af612";
+    }
+    else if (cardNumber == 18) {
+        return "01120112661af212";
+    }
+    else if (cardNumber == 19) {
+        return "01120212661afd12";
+    }
+    else if (cardNumber == 20) {
+        return "01120112661af312";
+    }
+    else if (cardNumber == 21) {
+        return "010104128215612b";
+    }
+};
 
 },{"axios":3}],3:[function(require,module,exports){
 module.exports = require('./lib/axios');

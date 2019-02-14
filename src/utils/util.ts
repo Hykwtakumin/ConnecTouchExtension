@@ -30,8 +30,8 @@ export const client = axios.create({
     withCredentials: false,
     validateStatus: _ => true,
     headers: {
-        Accept: "application/text/plain",
-        "Content-Type": "application/text/plain",
+        Accept: "application/json, application/text/plain",
+        "Content-Type": "application/text/plain, application/json, application/x-www-form-urlencoded",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers":"Content-Type",
         "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -101,20 +101,6 @@ export const getStorage = (key: string): Promise<StorageValue> => {
     });
 };
 
-/*カード番号からcardIDを解決する関数*/
-export const resolveCardIdByNumber = async (cardNumber: number): Promise<string> => {
-    return new Promise( async (resolve, reject) => {
-        /*userCardTable.jsonを取得する*/
-        const request = await get("http://192.168.0.200:3000/userCardTable.json", {});
-        const cardTable = await request.data;
-        console.dir(cardTable);
-        const cardId = cardTable.find(card => {
-            return card.number == cardNumber
-        });
-        resolve(cardId.id);
-    });
-};
-
 /*参加者のプロフィールを取ってくる関数*/
 export const getUserInfo = async (cardId : string):Promise<CardInfo> => {
     const endPointUrl = `http://192.168.0.200/info`;
@@ -143,4 +129,30 @@ export const getReaderInfo = async (readerId: string): Promise<string> => {
         });
         resolve(reader.desc);
     });
+};
+/*カード番号からcardIDを解決する関数*/
+export const resolveCardIdByNumber = (cardNumber: number): string => {
+    if (cardNumber == 11) {
+        return "01120112661ac512";
+    } else if (cardNumber == 12) {
+        return "01120212661ad012";
+    } else if (cardNumber == 13) {
+        return "01120212661af412";
+    } else if (cardNumber == 14) {
+        return "01120112661aea12";
+    } else if (cardNumber == 15) {
+        return "01120212661af512";
+    } else if (cardNumber == 16) {
+        return "01120112661aeb12";
+    } else if (cardNumber == 17) {
+        return "01120212661af612";
+    } else if (cardNumber == 18) {
+        return "01120112661af212";
+    } else if (cardNumber == 19) {
+        return "01120212661afd12";
+    } else if (cardNumber == 20) {
+        return "01120112661af312";
+    } else if (cardNumber == 21) {
+        return "010104128215612b";
+    }
 };

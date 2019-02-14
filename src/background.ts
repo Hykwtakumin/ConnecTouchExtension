@@ -59,55 +59,22 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
             console.dir(link);
             console.log(`link.id : ${link.link[1]}`);
             console.log(`observeCardID : ${observeCardID}`);
-            // if (link.link[0] === "signagePhoto") {
-            //     /*サイネージストーリーの時も分岐させる*/if (link.link[1] === observeCardID) {
-            //         /*自分で写真をとって自分のタイムラインに表示する*/
-            //         notify(`新しい写真を撮影しました!`);
-            //     } else {
-            //         /*secretが一致する人の写真も通知する
-            //         * */
-            //         const me = await getUserInfo(observeCardID);
-            //         const you = await getUserInfo(diffLinks[0].link[1]);
-            //         if (isKeyWordContained(me.secrets, you.secrets)) {
-            //             notify(`${you.email}新しい写真を撮影しました!`);
-            //         }
-            //     }
-            // } else if (link.link[1] === observeCardID) {
-            //     notify(`新しいタッチイベントが発生しました!`);
-            // } else {
-            //     const me = await getUserInfo(observeCardID);
-            //     const you = await getUserInfo(diffLinks[0].link[1]);
-            //     if (await isKeyWordContained(me.secrets, you.secrets)) {
-            //         notify(`新しいタッチイベントが発生しました!`);
-            //     }
-            // }
-
             if (link.link[0] === "signagePhoto") {
-                const cardID = link.link[1];
-                const taker = await getUserInfo(cardID);
-                notify(`${taker.email}が新しい写真を撮影しました!`);
-
-                // if (link.link[1] === observeCardID) {
-                //     notify("新しい写真を撮影しました!");
-                // } else {
-                //     const cardID = link.link[1];
-                //     const taker = await getUserInfo(cardID);
-                //     notify(`${taker.email}が新しい写真を撮影しました!`);
-                // }
-
+                /*サイネージストーリーの時も分岐させる*/
+                if (link.link[1] !== observeCardID) {
+                    const me = await getUserInfo(observeCardID);
+                    const you = await getUserInfo(diffLinks[0].link[1]);
+                    if (isKeyWordContained(me.secrets, you.secrets)) {
+                        notify(`${you.email}が新しい写真を撮影しました!`);
+                    }
+                }
             } else {
-                const cardID = link.link[1];
+                const me = await getUserInfo(observeCardID);
+                const you = await getUserInfo(diffLinks[0].link[1]);
                 const readerName = await getReaderInfo(link.link[0]);
-                const taker = await getUserInfo(cardID);
-                notify(`${taker.email}が${readerName}にタッチしました。`);
-                // const readerName = getReaderInfo(link.link[0]);
-                // if (link.link[1] === observeCardID) {
-                //     notify(`${readerName}にタッチしました!`);
-                // } else {
-                //     const cardID = link.link[1];
-                //     const taker = await getUserInfo(cardID);
-                //     notify(`${taker.email}が${readerName}にタッチしました。`);
-                // }
+                if (await isKeyWordContained(me.secrets, you.secrets)) {
+                    notify(`${you.email}が${readerName}にタッチしました!`);
+                }
             }
         });
     }
@@ -125,15 +92,7 @@ browser.storage.onChanged.addListener( async (changes) => {
         } else if (key === "targetCardNumber") {
             cardNumber = changes[key].newValue;
             console.log(`cardNumber : ${cardNumber}`);
-            resolveCardIdByNumber(cardNumber)
-                .then(cardId => {
-                    observeCardID = cardId;
-                    console.log(`observeCardID : ${observeCardID}`);
-                    window.localStorage.setItem("observeCardID", observeCardID);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+            observeCardID = resolveCardIdByNumber(cardNumber)
         }
     }
 });

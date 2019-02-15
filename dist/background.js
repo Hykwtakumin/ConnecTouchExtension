@@ -68,11 +68,14 @@ exports.getDiff = (oldLinks, newLinks) => {
                 }
             }
             else {
-                const me = yield util_1.getUserInfo(observeCardID);
-                const you = yield util_1.getUserInfo(diffLinks[0].link[1]);
-                const readerName = yield util_1.getReaderInfo(link.link[0]);
-                if (yield util_1.isKeyWordContained(me.secrets, you.secrets)) {
-                    util_1.notify(`${you.email}が${readerName}にタッチしました!`);
+                //自分のイベントは通知しない
+                if (link.link[1] !== observeCardID) {
+                    const me = yield util_1.getUserInfo(observeCardID);
+                    const you = yield util_1.getUserInfo(diffLinks[0].link[1]);
+                    const readerName = yield util_1.getReaderInfo(link.link[0]);
+                    if (yield util_1.isKeyWordContained(me.secrets, you.secrets)) {
+                        util_1.notify(`${you.email}が${readerName}にタッチしました!`);
+                    }
                 }
             }
         }));

@@ -69,11 +69,14 @@ export const getDiff = (oldLinks: Array<ConnecTouchLink>, newLinks: Array<Connec
                     }
                 }
             } else {
-                const me = await getUserInfo(observeCardID);
-                const you = await getUserInfo(diffLinks[0].link[1]);
-                const readerName = await getReaderInfo(link.link[0]);
-                if (await isKeyWordContained(me.secrets, you.secrets)) {
-                    notify(`${you.email}が${readerName}にタッチしました!`);
+                //自分のイベントは通知しない
+                if (link.link[1] !== observeCardID) {
+                    const me = await getUserInfo(observeCardID);
+                    const you = await getUserInfo(diffLinks[0].link[1]);
+                    const readerName = await getReaderInfo(link.link[0]);
+                    if (await isKeyWordContained(me.secrets, you.secrets)) {
+                        notify(`${you.email}が${readerName}にタッチしました!`);
+                    }
                 }
             }
         });

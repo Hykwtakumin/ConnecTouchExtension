@@ -13,6 +13,10 @@
         {
           "version": "0.1.2",
           "update_link": "https://github.com/Hykwtakumin/ConnecTouchExtension/blob/master/connectouchextension-0.1.2-an%2Bfx.xpi"
+        },
+        {
+          "version": "0.1.3",
+          "update_link": "https://github.com/Hykwtakumin/ConnecTouchExtension/blob/master/connectouchextension-0.1.3-an%2Bfx.xpi"
         }
       ]
     }
